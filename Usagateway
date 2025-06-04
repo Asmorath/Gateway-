@@ -1,0 +1,268 @@
+<!DOCTYPE html><html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Connect to Mexico VPN & Proceed</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 20px;
+            background-color: #f4f7f6;
+            color: #333;
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            min-height: 100vh;
+        }
+        .container {
+            background-color: #ffffff;
+            padding: 30px 40px;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            max-width: 800px;
+            width: 100%;
+        }
+        h1 {
+            color: #2c3e50;
+            text-align: center;
+            margin-bottom: 25px;
+            font-size: 2em;
+        }
+        h2 {
+            color: #34495e;
+            margin-top: 30px;
+            margin-bottom: 15px;
+            font-size: 1.5em;
+        }
+        p {
+            margin-bottom: 10px;
+        }
+        ol {
+            margin-left: 20px;
+            margin-bottom: 20px;
+        }
+        li {
+            margin-bottom: 10px;
+        }
+        li a {
+            color: #007bff;
+            text-decoration: none;
+        }
+        li a:hover {
+            text-decoration: underline;
+        }
+        .button-container {
+            text-align: center;
+            margin-top: 30px;
+        }
+        #proceedButton, #retryButton {
+            background-color: #28a745;
+            color: white;
+            padding: 15px 30px;
+            font-size: 1.2em;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+        #proceedButton:hover, #retryButton:hover {
+            background-color: #218838;
+        }
+        .important-note {
+            background-color: #fff3cd;
+            border-left: 5px solid #ffc107;
+            padding: 15px;
+            margin-top: 25px;
+            border-radius: 5px;
+            color: #856404;
+        }
+        .important-note strong {
+            color: #664d03;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Connect to Mexico VPN & Proceed</h1><div class="important-note">
+        <strong>Important Note:</strong> This page will guide you through connecting to a VPN. We cannot automatically establish a VPN connection for you. Please follow the steps carefully.
+    </div>
+
+    <h2>Step 1: Understand VPNs</h2>
+    <p>A Virtual Private Network (VPN) creates a secure, encrypted connection over a less secure network, such as the internet. It allows you to appear as if you are browsing from a different location, which is what we need to connect to Mexico.</p>
+
+    <h2>Step 2: Choose and Install a Free VPN App (No Login Required)</h2>
+    <p>Here are some popular free VPN services that often offer servers in Mexico and typically don't require an extensive login process. <strong>Please research and choose one that you feel comfortable with.</strong> Click the links below to visit their official download pages:</p>
+    <ol>
+        <li>
+            <strong>Proton VPN Free:</strong>
+            <ul>
+                <li><a href="https://protonvpn.com/download" target="_blank">Download Proton VPN</a></li>
+                <li>Install the app and look for a free server location in Mexico.</li>
+            </ul>
+        </li>
+        <li>
+            <strong>TunnelBear (Limited Free Data):</strong>
+            <ul>
+                <li><a href="https://www.tunnelbear.com/download" target="_blank">Download TunnelBear</a></li>
+                <li>Connect to a Mexican server.</li>
+            </ul>
+        </li>
+        <li>
+            <strong>Windscribe (Limited Free Data):</strong>
+            <ul>
+                <li><a href="https://windscribe.com/download" target="_blank">Download Windscribe</a></li>
+                <li>Select a Mexican server and connect.</li>
+            </ul>
+        </li>
+        <li>
+            <strong>Other Options:</strong> Search your app store for "free VPN Mexico no login" but be cautious and check reviews.
+        </li>
+    </ol>
+
+    <p><strong>Remember:</strong> "Free" VPNs often come with limitations. Always download from official sources to ensure security.</p>
+
+    <h2>Step 3: Connect to a Mexican VPN Server</h2>
+    <ol>
+        <li>Open the VPN app you just installed.</li>
+        <li>Look for an option to select a server location.</li>
+        <li>Choose a server located in <strong>Mexico</strong>.</li>
+        <li>Click the "Connect" button within the VPN app.</li>
+        <li>Wait for confirmation. You may also see a VPN icon on your device.</li>
+    </ol>
+
+    <h2>Step 4: Confirm & Proceed</h2>
+    <p>Once you are sure you're connected to a Mexican server, click the button below to verify and continue.</p>
+
+    <div class="button-container">
+        <button id="proceedButton">I'm Connected to Mexico VPN! Proceed</button>
+        <button id="retryButton" style="margin-top: 10px; display: none;">Check Again</button>
+        <p id="statusMessage" style="margin-top:10px;"></p>
+        <p id="ipDetails" style="font-size: 0.9em; color: #555;"></p>
+    </div>
+</div>
+
+<script>
+const proceedBtn = document.getElementById('proceedButton');
+const retryBtn = document.getElementById('retryButton');
+const statusEl = document.getElementById('statusMessage');
+const ipDetailsEl = document.getElementById('ipDetails');
+
+proceedBtn.addEventListener('click', checkLocation);
+retryBtn.addEventListener('click', checkLocation);
+
+async function checkLocation() {
+    statusEl.textContent = "Verifying VPN location...";
+    ipDetailsEl.textContent = "";
+    retryBtn.style.display = "none";
+
+    try {
+        const res = await fetch('https://ipapi.co/json/');
+        const data = await res.json();
+
+        ipDetailsEl.textContent = `IP: ${data.ip} • Location: ${data.city}, ${data.region}, ${data.country_name}`;
+
+        if (data.country_name === "Mexico") {
+            statusEl.textContent = "✅ Verified! Redirecting...";
+            window.location.href = 'https://dimebit.com/ref/fb777';
+        } else {
+            statusEl.textContent = "❌ VPN is not connected to Mexico. Please try again.";
+            retryBtn.style.display = "inline-block";
+        }
+    } catch (error) {
+        statusEl.textContent = "⚠️ Error verifying location. Please check your VPN and try again.";
+        retryBtn.style.display = "inline-block";
+    }
+}
+</script>
+<!-- BEGIN: ASMORATH Responsive Footer -->
+<style>
+    @media (max-width: 768px) {
+        .footer-asmarath {
+            display: none !important;
+        }
+    }
+
+    .footer-asmarath {
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        width: 100%;
+        background-color: #1c1c1c;
+        color: #9eff78;
+        text-align: center;
+        padding: 12px 0;
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        font-size: 0.95em;
+        letter-spacing: 4px;
+        z-index: 999;
+        box-shadow: 0 -2px 6px rgba(0,0,0,0.2);
+    }
+
+    .asmarath-footer-mobile {
+        display: none;
+    }
+
+    @media (max-width: 768px) {
+        .asmarath-footer-mobile {
+            display: block;
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+            background-color: #1c1c1c;
+            color: #9eff78;
+            text-align: center;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            z-index: 999;
+            box-shadow: 0 -2px 5px rgba(0,0,0,0.2);
+        }
+
+        .footer-toggle {
+            padding: 10px;
+            font-size: 1.2em;
+            cursor: pointer;
+            border-top: 1px solid #333;
+            user-select: none;
+        }
+
+        .footer-details {
+            display: none;
+            padding-bottom: 10px;
+            font-size: 0.85em;
+            letter-spacing: 3px;
+        }
+    }
+</style>
+
+<!-- Desktop Footer -->
+<footer class="footer-asmarath">
+    <img src="dimebit-logo.png" alt="Dimebit Gateway US Logo" style="height: 32px; vertical-align: middle; margin-right: 10px;">
+    <span style="vertical-align: middle;">A▪︎S▪︎M▪︎O▪︎R▪︎A▪︎T▪︎H</span>
+</footer>
+
+<!-- Mobile Drawer Footer -->
+<div class="asmarath-footer-mobile">
+    <div class="footer-toggle" onclick="toggleFooterDetails()">▲</div>
+    <div class="footer-details" id="footerDetails">
+        <img src="dimebit-logo.png" alt="Dimebit Gateway US Logo" style="height: 30px; margin-bottom: 6px;">
+        <div style="letter-spacing: 5px;">A▪︎S▪︎M▪︎O▪︎R▪︎A▪︎T▪︎H</div>
+    </div>
+</div>
+
+<script>
+    function toggleFooterDetails() {
+        const footer = document.getElementById("footerDetails");
+        const toggle = document.querySelector(".footer-toggle");
+        if (footer.style.display === "block") {
+            footer.style.display = "none";
+            toggle.textContent = "▲";
+        } else {
+            footer.style.display = "block";
+            toggle.textContent = "▼";
+        }
+    }
+</script>
+<!-- END: ASMORATH Responsive Footer -->
+</body>
+</html>
